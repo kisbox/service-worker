@@ -1,0 +1,34 @@
+{
+  "name": "@kisbox/service-worker",
+  "version": "1.0.0-beta.1",
+  "description": "Generic service worker class",
+  "author": "MisterTicot <mister.ticot@cosmic.plus>",
+  "repository": "github:kisbox/service-worker",
+  "license": "MIT",
+  "main": "src/index.js",
+  "module": "compat/index.js",
+  "keywords": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf compat/*",
+    "prettier": "prettier --write --no-semi 'src/**/*.{js,json,md}' '*.{js,json,md}'",
+    "eslint": "eslint --fix 'src/**/*.js' '*.js'",
+    "lint": "npm run prettier && npm run eslint",
+    "build": "babel src --out-dir compat",
+    "watch": "babel src --watch --out-dir compat",
+    "commit-release": "[ \"$version\" ] && git ci -am \"Release $version\"",
+    "tag-release": "[ \"$version\" ] && git tag -s \"$version\" -m \"Release $version\"",
+    "push-release": "git push --follow-tags",
+    "make-release": "npm run test && npm run build && npm run commit-release",
+    "publish-release": "npm run tag-release && npm run push-release && npm publish --tag beta"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "eslint": "^6.8.0",
+    "prettier": "^1.19.1"
+  },
+  "dependencies": {}
+}
