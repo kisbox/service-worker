@@ -55,7 +55,7 @@ const ServiceWorker = module.exports = class ServiceWorker {
    * Register ServiceWorker.
    */
   register () {
-    self.addEventListener("install", event => {
+    self.addEventListener("install", (event) => {
       this.log(`Installing ${this.cacheName}...`)
       event.waitUntil(
         precache(this, this.get)
@@ -64,11 +64,11 @@ const ServiceWorker = module.exports = class ServiceWorker {
       )
     })
 
-    self.addEventListener("activate", event => {
+    self.addEventListener("activate", (event) => {
       event.waitUntil(wipeCachesExcept(this.cacheName))
     })
 
-    self.addEventListener("fetch", event => {
+    self.addEventListener("fetch", (event) => {
       if (!this.enabled || event.request.method !== "GET") return
       if (!event.request.url.match(this.startByRoot)) return
 
@@ -101,8 +101,8 @@ const ServiceWorker = module.exports = class ServiceWorker {
  */
 function precache (worker, files) {
   // Tag URL to bypass browser cache.
-  const urls = files.map(f => `${f}?version=${worker.version}`)
-  return caches.open(worker.cacheName).then(cache => cache.addAll(urls))
+  const urls = files.map((f) => `${f}?version=${worker.version}`)
+  return caches.open(worker.cacheName).then((cache) => cache.addAll(urls))
 }
 
 /**
@@ -111,7 +111,7 @@ function precache (worker, files) {
 function wipeCachesExcept (cacheName) {
   return caches.keys().then(function (keys) {
     return Promise.all(
-      keys.map(key => {
+      keys.map((key) => {
         if (key !== cacheName) caches.delete(key)
       })
     )
@@ -128,7 +128,7 @@ const strategy = {}
  */
 strategy.fromCache = function (worker, request, filename) {
   worker.log(`Looking for ${filename} into ${worker.cacheName} cache...`)
-  return caches.open(worker.cacheName).then(cache => cache.match(request))
+  return caches.open(worker.cacheName).then((cache) => cache.match(request))
 }
 
 /**
@@ -162,7 +162,7 @@ strategy.cacheOrNetwork = async function (worker, request, filename) {
  */
 function cacheResponse (worker, request, response) {
   const cacheCopy = response.clone()
-  caches.open(worker.cacheName).then(cache => cache.put(request, cacheCopy))
+  caches.open(worker.cacheName).then((cache) => cache.put(request, cacheCopy))
 }
 
 /*******************************************************************************
@@ -171,7 +171,7 @@ function cacheResponse (worker, request, response) {
 
 for (let key in strategy) {
   ServiceWorker.prototype[key] = function (array) {
-    array.forEach(filename => this.files[filename] = key)
+    array.forEach((filename) => this.files[filename] = key)
     return this
   }
 }
