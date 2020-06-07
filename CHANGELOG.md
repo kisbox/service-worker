@@ -1,6 +1,6 @@
 **service-worker /**
-[Changelog](https://github.com/kisbox/service-worker/blob/master/CHANGELOG.md)
-• [Readme](https://github.com/kisbox/service-worker/blob/master/README.md)
+[Readme](https://github.com/kisbox/service-worker/blob/master/README.md)
+• [Changelog](https://github.com/kisbox/service-worker/blob/master/CHANGELOG.md)
 
 # Changelog
 
